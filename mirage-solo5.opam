@@ -13,20 +13,20 @@ tags: [
   "org:mirage"
 ]
 build: [
-  [ "ocaml" "pkg/pkg.ml" "build" "--dev-pkg" "%{dev}%" ]
+  ["dune" "subst"] {pinned}
+  ["dune" "build" "-p" name "-j" jobs]
+  ["dune" "runtest" "-p" name] {with-test}
 ]
 depends: [
-  "ocamlfind" {build}
-  "ocamlbuild" {build}
-  "topkg" {build & >= "0.9.0"}
-  "bheap"
-  "ocb-stubblr" {build}
+  "metrics"
   "ocaml" {>= "4.05.0"}
+  "dune" {build & >= "1.7"}
   "cstruct" {>= "1.0.1"}
   "lwt" {>= "2.4.3"}
+  "mirage-os-shim"
   "lwt-dllist"
+  "bheap"
   "ocaml-freestanding" {>= "0.4.5"}
-  "metrics"
   "logs"
   ("solo5-bindings-hvt" {>= "0.6.0" & < "0.7.0"} | "solo5-bindings-spt" {>= "0.6.0" & < "0.7.0"} | "solo5-bindings-virtio" {>= "0.6.0" & < "0.7.0"} | "solo5-bindings-muen" {>= "0.6.0" & < "0.7.0"} | "solo5-bindings-genode" {>= "0.6.0" & < "0.7.0"})
 ]
