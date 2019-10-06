@@ -52,7 +52,7 @@ let cond_0 =
   work := HandleMap.add (-1L) cond !work ;
   cond
 
-let wait_for_work = Lwt_condition.wait cond_0
+let wait_for_work () = Lwt_condition.wait cond_0
 
 (* Wait for work on handle [h]. The Lwt_condition and HandleMap binding are
  * created lazily the first time [h] is waited on. *)
