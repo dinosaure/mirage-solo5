@@ -47,6 +47,13 @@ let rec call_hooks hooks  =
 module HandleMap = Map.Make(Int64)
 let work = ref HandleMap.empty
 
+let cond_0 =
+  let cond = Lwt_condition.create () in
+  work := HandleMap.add (-1L) cond !work ;
+  cond
+
+let wait_for_work = Lwt_condition.wait cond_0
+
 (* Wait for work on handle [h]. The Lwt_condition and HandleMap binding are
  * created lazily the first time [h] is waited on. *)
 let wait_for_work_on_handle h =
